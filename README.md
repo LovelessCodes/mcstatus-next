@@ -1,28 +1,37 @@
-# Create T3 App
+# MCStatus-Next
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+MCStatus-Next is a project built with Next.js, tRPC, NextAuth, and integration with the MCRouter API through environment variables. It provides a powerful and user-friendly dashboard to monitor the status of Minecraft servers served through MCRouter.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+🔍 **Server Status Monitoring**: MCStatus-Next allows you to monitor the status of your Minecraft servers in real-time. It provides information on the server's uptime, player count, and other important metrics.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+🔒 **Discord Authentication**: The project integrates with Discord authentication through Next Auth, allowing users to sign in securely using their Discord accounts. This ensures a seamless and convenient login experience for server administrators.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+🔌 **MCRouter API Integration**: MCStatus-Next connects with the MCRouter API, enabling it to retrieve essential information about the Minecraft servers. It utilizes environment variables to configure the API URL, ensuring flexibility and ease of use.
 
-## Learn More
+🖥️ **User-Friendly Dashboard**: The dashboard interface is designed to be intuitive and user-friendly. It provides an organized view of server status, player activity, and other relevant data, making it easy to manage multiple Minecraft servers effectively.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Setup
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+To set up MCStatus-Next, follow the steps below:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+1. Clone the repository to your local machine.
+2. Create a `.env.local` file based on the provided `.env.example` file.
+3. Fill in the necessary configuration values in the `.env.local` file, including the Discord client ID and secret, MCRouter API URL, and any other required variables.
+4. Install the project dependencies by running `npm install` or `yarn install` in the project's root directory.
+5. Start the development server with `npm run dev` or `yarn dev`.
 
-## How do I deploy this?
+MCStatus-Next will now be accessible in your web browser at the specified URL.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Contributing
+
+Contributions to MCStatus-Next are welcome! If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the project's GitHub repository.
+
+## License
+
+MCStatus-Next is licensed under the [MIT License](LICENSE). You are free to modify and distribute this project in accordance with the terms of the license.
+
+## Acknowledgments
+
+MCStatus-Next was inspired by the need for a comprehensive and user-friendly solution to monitor Minecraft server status. Special thanks to the creators and contributors of [Next.js](https://github.com/vercel/next.js), [tRPC](https://github.com/trpc/trpc), [NextAuth](https://github.com/nextauthjs/next-auth), and [MCRouter](https://github.com/itzg/mc-router) for their amazing work.

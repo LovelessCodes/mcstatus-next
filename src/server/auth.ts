@@ -35,11 +35,22 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
+    async signIn({ user }) {
+      if (!user.email) {
+        return false;
+      }
+      if (!env.AUTHENTICATED_EMAILS) {
+        return false;
+      }
+      if (!env.AUTHENTICATED_EMAILS.includes(user.email)) {
+        return false;
+      }
+      return true;
+    },
+    session: ({ session }) => ({
       ...session,
       user: {
         ...session.user,
-        id: user.id,
       },
     }),
   },
