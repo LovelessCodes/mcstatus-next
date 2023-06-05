@@ -30,7 +30,7 @@ Contributions to MCStatus-Next are welcome! If you encounter any issues or have 
 
 ## License
 
-MCStatus-Next is licensed under the [MIT License](LICENSE). You are free to modify and distribute this project in accordance with the terms of the license.
+MCStatus-Next is licensed under the [MIT License](LICENSE.md). You are free to modify and distribute this project in accordance with the terms of the license.
 
 ## Acknowledgments
 
