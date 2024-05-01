@@ -7,7 +7,6 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
-import { statusJava } from "node-mcstatus";
 
 export const routeRouter = createTRPCRouter({
   routes: publicProcedure.query(async () => {
@@ -19,12 +18,7 @@ export const routeRouter = createTRPCRouter({
         }
       }
     )
-    let servers = [];
-    for(const route of Object.keys(data)) {
-      const server = await statusJava(route);
-      servers.push(server);
-    }
-    return servers;
+    return Object.keys(data).map((address: string) => ({ address }));
   }),
   privRoutes: protectedProcedure.query(async () => {
     const { data } = await axios.get(
@@ -35,11 +29,7 @@ export const routeRouter = createTRPCRouter({
         }
       }
     )
-    let routes = [];
-    for(const route of Object.keys(data)) {
-      routes.push({ address: route, backend: data[route] });
-    }
-    return routes;
+    return Object.keys(data).map((address: string) => ({ address, backend: data[address] }));
   }),
   insertRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
     const { data } = await axios.post(
