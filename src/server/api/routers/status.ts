@@ -7,7 +7,7 @@ import {
 } from "~/server/api/trpc";
 
 export const statusRouter = createTRPCRouter({
-  status: publicProcedure.input(z.object({ address: z.string(), type: z.enum(["java", "bedrock"]) })).query(async ({ input }) => {
+  status: publicProcedure.input(z.object({ address: z.string(), type: z.enum(["java", "bedrock"]) })).mutation(async ({ input }) => {
     let status;
     if (input.type == "java") {
       status = await statusJava(input.address);
