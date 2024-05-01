@@ -1,4 +1,4 @@
-import type { GetServerSideProps, GetServerSidePropsResult, InferGetServerSidePropsType } from 'next';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -54,8 +54,8 @@ function Home({ title, description, favicon }: InferGetServerSidePropsType<typeo
         if (!!Array.isArray(routes)) {
             routes.filter(
                 (route: { address: string }) => servers.findIndex((server: MCStatus) => server.host === route.address) === -1
-            ).forEach((route: { address: string; backend?: string; }) => {
-                mutation.mutateAsync({ address: route.address, type: "java" });
+            ).forEach(async (route: { address: string; backend?: string; }) => {
+                await mutation.mutateAsync({ address: route.address, type: "java" });
             });
         }
     }, [routes]);

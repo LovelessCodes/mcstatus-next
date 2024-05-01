@@ -38,8 +38,8 @@ const SignIn = () => {
                             </p>
                         </div>
                         <div className="btn-group w-full">
-                            <button className="btn btn-primary rounded-none w-1/2" disabled={!email.safeParse(emailState).success} onClick={() => {
-                                if (email.safeParse(emailState).success) signMeIn();
+                            <button className="btn btn-primary rounded-none w-1/2" disabled={!email.safeParse(emailState).success} onClick={async () => {
+                                if (email.safeParse(emailState).success) await signMeIn();
                             }}>Sign in</button>
                             <label className="btn btn-ghost rounded-none w-1/2" htmlFor="sign-in">Cancel</label>
                         </div>

@@ -10,64 +10,76 @@ import {
 
 export const routeRouter = createTRPCRouter({
   routes: publicProcedure.query(async () => {
-    const { data } = await axios.get(
+    const response = await fetch(
       env.MCROUTER_API_URL + "/routes",
       {
+        method: "GET",
         headers: {
           "Accept": "application/json",
         }
       }
     )
-    return Object.keys(data).map((address: string) => ({ address }));
+    const { data } = await response.json();
+    return Object.keys(data).map((address: string) => ({ address })) as { address: string }[];
   }),
   privRoutes: protectedProcedure.query(async () => {
-    const { data } = await axios.get(
+    const response = await fetch(
       env.MCROUTER_API_URL + "/routes",
       {
+        method: "GET",
         headers: {
           "Accept": "application/json",
         }
       }
     )
-    return Object.keys(data).map((address: string) => ({ address, backend: data[address] }));
+    const { data } = await response.json();
+    return Object.keys(data).map((address: string) => ({ address, backend: data[address] })) as { address: string, backend: string }[];
   }),
   insertRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
-    const { data } = await axios.post(
+    const response = await fetch(
       env.MCROUTER_API_URL + "/routes",
       {
-        serverAddress: input.address,
-        backend: input.backend,
-      },
-      {
+        method: "POST",
         headers: {
           "Accept": "application/json",
-        }
+        },
+        body: JSON.stringify({
+          serverAddress: input.address,
+          backend: input.backend,
+        }),
       }
     )
-    return data;
+    const { data } = await response.json();
+    return data as string;
   }),
   updateRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
     await axios.delete(
       env.MCROUTER_API_URL + "/routes/" + input.address
     )
-    const { data } = await axios.post(
+    const response = await fetch(
       env.MCROUTER_API_URL + "/routes",
       {
-        serverAddress: input.address,
-        backend: input.backend,
-      },
-      {
+        method: "POST",
         headers: {
           "Accept": "application/json",
-        }
+        },
+        body: JSON.stringify({
+          serverAddress: input.address,
+          backend: input.backend,
+        })
       }
     )
-    return data;
+    const { data } = await response.json();
+    return data as string;
   }),
   deleteRoute: protectedProcedure.input(z.string()).mutation(async ({ input }) => {
-    const { data } = await axios.delete(
-      env.MCROUTER_API_URL + "/routes/" + input
+    const response = await fetch(
+      env.MCROUTER_API_URL + "/routes/" + input,
+      {
+        method: "DELETE",
+      }
     )
-    return data;
+    const { data } = await response.json();
+    return data as string;
   }),
 });
