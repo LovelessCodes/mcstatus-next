@@ -4,30 +4,28 @@ import { api } from "~/utils/api";
 
 const DeleteRoute = ({route}: {route: string}) => {
     const { data: sessionData } = useSession();
-    const utils = api.useContext();
-  
+    const utils = api.useUtils();
+
     const { mutate: deleteRoute, isLoading: isDeleting } = api.route.deleteRoute.useMutation({
-      onSuccess: () => {
-        document.getElementById("delete-route")?.click();
-        console.log("Success");
-        utils.route.routes.invalidate();
-      },
-      onError: () => {
-        console.log("Error");
-      },
+        onSuccess: () => {
+            document.getElementById("delete-route")?.click();
+            utils.route.routes.invalidate();
+        },
     });
     if (sessionData === undefined) return <div>Loading...</div>;
     return (
         <>
-            <input type="checkbox" id="delete-route" className="modal-toggle"/>
-            <label htmlFor="delete-route" className="modal">
-                <label className="modal-box relative" htmlFor="">
+            <input type="checkbox" id="delete-route" className="modal-toggle peer"/>
+            <label htmlFor="delete-route" className="modal peer-checked:grid hidden">
+                <label className="modal-box rounded-none relative" htmlFor="">
                     <div className="flex flex-col p-10">
-                        <label htmlFor="delete-route" className="absolute top-2 right-2 btn btn-sm btn-circle cursor-pointer">X</label>
+                        <label htmlFor="delete-route" className="absolute top-2 right-2 border-red-900 text-red-500 hover:text-base-200 hover:bg-red-500 transition-colors border rounded-none cursor-pointer">
+                            <svg fill="none" height={24} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M5 5h2v2H5V5zm4 4H7V7h2v2zm2 2H9V9h2v2zm2 0h-2v2H9v2H7v2H5v2h2v-2h2v-2h2v-2h2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2v-2zm2-2v2h-2V9h2zm2-2v2h-2V7h2zm0 0V5h2v2h-2z" fill="currentColor"/> </svg>
+                        </label>
                         <h2 className="text-2xl font-bold">Confirm Deletion</h2>
-                        <p className="text-lg">Are you sure you want to delete this route?</p>
-                        <label className="input-group w-full">
-                            <span>Route</span>
+                        <p className="text-lg">Are you sure you want to delete this server?</p>
+                        <label className="input-group w-full mt-4">
+                            <span>Server</span>
                             <p className="bg-neutral py-2 w-9/12 px-4 flex text-slate-400 tooltip tooltip-right hover:text-slate-200 hover:cursor-pointer justify-between" data-tip="Copy IP" onClick={(e) => {
                             navigator.clipboard.writeText(route);
                             const target = e.currentTarget;
@@ -41,12 +39,12 @@ const DeleteRoute = ({route}: {route: string}) => {
                         </label>
                         <div className="btn-group w-full mt-6">
                             {isDeleting ?
-                                <button className="btn btn-primary w-1/2" disabled>Deleting...</button> :
-                                <button className="btn btn-error w-1/2" onClick={() => {
+                                <button className="btn btn-primary rounded-none w-1/2" disabled>Deleting...</button> :
+                                <button className="btn btn-error rounded-none w-1/2" onClick={() => {
                                     deleteRoute(route);
                                 }}>Confirm</button>
                             }
-                            <label className="btn btn-ghost w-1/2" htmlFor="delete-route">Cancel</label>
+                            <label className="btn btn-ghost rounded-none w-1/2" htmlFor="delete-route">Cancel</label>
                         </div>
                     </div>
                 </label>
