@@ -18,7 +18,7 @@ export const routeRouter = createTRPCRouter({
         }
       }
     )
-    const data: [key: string] = await response.json();
+    const data: [key: string] = await response.json() as [key: string];
     return Object.keys(data).map((address: string) => ({ address })) as { address: string }[];
   }),
   privRoutes: protectedProcedure.query(async () => {
@@ -31,7 +31,7 @@ export const routeRouter = createTRPCRouter({
         }
       }
     )
-    const { data }: { data: Record<string, string> } = await response.json();
+    const { data }: { data: Record<string, string> } = await response.json() as { data: Record<string, string> };
     return Object.keys(data).map((address: string) => ({ address, backend: data[address] })) as { address: string, backend: string }[];
   }),
   insertRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
@@ -48,7 +48,7 @@ export const routeRouter = createTRPCRouter({
         }),
       }
     )
-    const { data }: { data: string } = await response.json();
+    const { data }: { data: string } = await response.json() as { data: string };
     return data;
   }),
   updateRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
@@ -70,7 +70,7 @@ export const routeRouter = createTRPCRouter({
         })
       }
     )
-    const { data }: { data: string } = await response.json();
+    const { data }: { data: string } = await response.json() as { data: string };
     return data;
   }),
   deleteRoute: protectedProcedure.input(z.string()).mutation(async ({ input }) => {
@@ -80,7 +80,7 @@ export const routeRouter = createTRPCRouter({
         method: "DELETE",
       }
     )
-    const { data }: { data: string } = await response.json();
+    const { data }: { data: string } = await response.json() as { data: string };
     return data;
   }),
 });
