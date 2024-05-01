@@ -1,12 +1,13 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { BedrockStatusResponse, JavaStatusResponse } from 'node-mcstatus';
+import type { BedrockStatusResponse, JavaStatusResponse } from 'node-mcstatus';
 import { useEffect, useReducer, useState } from 'react';
 import { AddModal, DeleteModal, SignInModal } from '~/components/modals';
 import { env } from '~/env.mjs';
 import { api } from '~/utils/api';
+import { copyIP } from '~/utils/helpers';
 
 type MCStatus = JavaStatusResponse | BedrockStatusResponse;
 
@@ -43,8 +44,6 @@ function Home({ title, description, favicon }: InferGetServerSidePropsType<typeo
         switch (action.type) {
             case "ADD":
                 return [...state, action.payload];
-            case "REMOVE":
-                return state.filter((server: any) => server.host !== action.payload);
             default:
                 return state;
         }
@@ -77,7 +76,7 @@ function Home({ title, description, favicon }: InferGetServerSidePropsType<typeo
                     </div>
                     <div className="stat">
                         <div className="stat-title text-slate-200">Active Servers</div>
-                        <div className="stat-value text-slate-200">{servers?.filter((s: any) => s.online)?.length ?? 0}</div>
+                        <div className="stat-value text-slate-200">{servers?.filter((s: MCStatus) => s.online)?.length ?? 0}</div>
                     </div>
                 </div>
 
@@ -156,20 +155,11 @@ function Home({ title, description, favicon }: InferGetServerSidePropsType<typeo
                                     <p dangerouslySetInnerHTML={{__html: (server && server.motd ? server.motd.html.replace("\n", "<br />") : "Unknown")}}/>
                                     <div className="flex flex-col gap-2">
                                         <p className="text-xs text-slate-400">Version: <span dangerouslySetInnerHTML={{__html: (server && server.version ? server.version.name_html : "Unknown")}}/></p>
-                                        {server.players && server.players.list && server.players.list.length > 0 && <p className="text-xs text-slate-400">Players: {server.players.list.map((player: any, i: number) => {
+                                        {server.players && server.players.list && server.players.list.length > 0 && <p className="text-xs text-slate-400">Players: {server.players.list.map((player: { uuid: string; name_raw: string; name_html: string; name_clean: string}, i: number) => {
                                             return <span key={i} dangerouslySetInnerHTML={{__html: player.name_html}}/>;
                                         })}</p>}
                                         <label className="input-group">
-                                            <p className="bg-neutral py-2 px-4 gap-2 flex text-slate-400 tooltip tooltip-right hover:text-slate-200 hover:cursor-pointer justify-between" data-tip="Copy" onClick={(e) => {
-                                            navigator.clipboard.writeText(server.host);
-                                            const target = e.currentTarget;
-                                            target.classList.toggle("tooltip-success");
-                                            target.setAttribute("data-tip", "Copied");
-                                            setTimeout(() => {
-                                                target.classList.toggle("tooltip-success");
-                                                target.setAttribute("data-tip", "Copy");
-                                            }, 1000);
-                                            }}>{server.host}<svg height={24} fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M4 2h11v2H6v13H4V2zm4 4h12v16H8V6zm2 2v12h8V8h-8z" fill="currentColor"/> </svg></p>
+                                            <p className="bg-neutral py-2 px-4 gap-2 flex text-slate-400 tooltip tooltip-right hover:text-slate-200 hover:cursor-pointer justify-between" data-tip="Copy" onClick={(e) => copyIP(e, server.host)}>{server.host}<svg height={24} fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M4 2h11v2H6v13H4V2zm4 4h12v16H8V6zm2 2v12h8V8h-8z" fill="currentColor"/> </svg></p>
                                         </label>
                                     </div>
                                     <div className={`flex justify-center items-center font-black${server.players && server.players.online > 0 ? ' text-green-500': ' text-red-500'}`}>

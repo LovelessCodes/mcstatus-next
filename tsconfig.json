@@ -16,6 +16,8 @@
     "jsx": "preserve",
     "incremental": true,
     "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]

@@ -13,11 +13,11 @@ const AddRoute = () => {
     const back = z.string().regex(/[-a-zA-Z0-9]+:[0-9]{1,5}/)
 
     const { mutate: addNewRoute, isLoading: isInserting } = api.route.insertRoute.useMutation({
-        onSuccess: () => {
+        onSuccess: async () => {
             document.getElementById("Add-route")?.click();
             setAddress("");
             setBackend("");
-            utils.route.routes.invalidate();
+            await utils.route.routes.invalidate();
         },
     });
     if (sessionData === undefined) return <div>Loading...</div>;
@@ -50,7 +50,7 @@ const AddRoute = () => {
                                 <label className="flex flex-col text-left">
                                     <span className="label-text">Backend *</span>
                                     <span className="label-description text-xs italic opacity-75">
-                                        The docker container's name + the port exposed to the server.
+                                        The docker container&apos;s name + the port exposed to the server.
                                     </span>
                                 </label>
                             </div>
