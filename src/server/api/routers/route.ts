@@ -1,5 +1,4 @@
 import { z } from "zod";
-import axios from "axios";
 import { env } from "~/env.mjs";
 
 import {
@@ -53,8 +52,10 @@ export const routeRouter = createTRPCRouter({
     return data;
   }),
   updateRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
-    await axios.delete(
-      env.MCROUTER_API_URL + "/routes/" + input.address
+    await fetch(
+      env.MCROUTER_API_URL + "/routes/" + input.address, {
+        method: "DELETE"
+      }
     )
     const response: Response = await fetch(
       env.MCROUTER_API_URL + "/routes",
