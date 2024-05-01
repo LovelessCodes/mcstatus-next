@@ -17,7 +17,7 @@ export const statusRouter = createTRPCRouter({
     return status;
   }),
   statuses: publicProcedure.input(z.object({ addresses: z.array(z.string()), type: z.enum(["java", "bedrock"]) })).query(async ({ input }) => {
-    let statuses = [];
+    const statuses = [];
     for (const address of input.addresses) {
       let status;
       if (input.type == "java") {

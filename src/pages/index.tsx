@@ -1,4 +1,4 @@
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { GetServerSideProps, GetServerSidePropsResult, InferGetServerSidePropsType } from 'next';
 import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -11,14 +11,14 @@ import { copyIP } from '~/utils/helpers';
 
 type MCStatus = JavaStatusResponse | BedrockStatusResponse;
 
-export const getServerSideProps = (async () => {
-    return {
+export const getServerSideProps = (() => {
+    return Promise.resolve({
         props: {
             title: env.PAGE_TITLE as string ?? "Minecraft Server",
             description: env.PAGE_DESCRIPTION as string ?? "Minecraft Server Status Dashboard",
             favicon: env.FAVICON_URL as string ?? "/favicon.ico",
         }
-    };
+    });
 }) satisfies GetServerSideProps<{ title: string, description: string, favicon: string }>;
 
 function Home({ title, description, favicon }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -26,8 +26,7 @@ function Home({ title, description, favicon }: InferGetServerSidePropsType<typeo
     const { data: sessionData } = useSession();
     
     // tRPC Queries
-    const {data: routes, isLoading: isRoutesLoading, isFetching: isRoutesFetching} = api.route.routes.useQuery(undefined, { enabled: true });
-    const {data: privRoutes} = api.route.privRoutes.useQuery(undefined, { enabled: sessionData?.user != undefined });
+    const {data: routes} = api.route.routes.useQuery(undefined, { enabled: true });
 
     // tRPC Mutations
     const mutation = api.status.status.useMutation({

@@ -7,6 +7,8 @@ const SignIn = () => {
     const email = z.string().email();
     const [ emailState, setEmailState ] = useState<string>("");
 
+    const signMeIn = async () => await signIn("email", { email: emailState });
+
     if (sessionData != undefined) return <div>Loading...</div>;
     return (
         <>
@@ -37,7 +39,7 @@ const SignIn = () => {
                         </div>
                         <div className="btn-group w-full">
                             <button className="btn btn-primary rounded-none w-1/2" disabled={!email.safeParse(emailState).success} onClick={() => {
-                                if (email.safeParse(emailState).success) signIn("email", { email: emailState });
+                                if (email.safeParse(emailState).success) signMeIn();
                             }}>Sign in</button>
                             <label className="btn btn-ghost rounded-none w-1/2" htmlFor="sign-in">Cancel</label>
                         </div>
