@@ -1,9 +1,9 @@
-import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { z } from "zod";
-import { api } from "~/utils/api";
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { z } from 'zod';
+import { api } from '~/utils/api';
 
-const AddRoute: React.FC = () => {
+const AddRoute = () => {
     const { data: sessionData } = useSession();
     const [ address, setAddress ] = useState("");
     const [ backend, setBackend ] = useState("");
