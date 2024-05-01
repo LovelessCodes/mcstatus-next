@@ -19,7 +19,7 @@ export const routeRouter = createTRPCRouter({
         }
       }
     )
-    const { data }: { data: Record<string, string> } = await response.json();
+    const data: [key: string] = await response.json();
     return Object.keys(data).map((address: string) => ({ address })) as { address: string }[];
   }),
   privRoutes: protectedProcedure.query(async () => {
@@ -50,7 +50,7 @@ export const routeRouter = createTRPCRouter({
       }
     )
     const { data }: { data: string } = await response.json();
-    return data as string;
+    return data;
   }),
   updateRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
     await axios.delete(
@@ -70,7 +70,7 @@ export const routeRouter = createTRPCRouter({
       }
     )
     const { data }: { data: string } = await response.json();
-    return data as string;
+    return data;
   }),
   deleteRoute: protectedProcedure.input(z.string()).mutation(async ({ input }) => {
     const response: Response = await fetch(
@@ -80,6 +80,6 @@ export const routeRouter = createTRPCRouter({
       }
     )
     const { data }: { data: string } = await response.json();
-    return data as string;
+    return data;
   }),
 });
