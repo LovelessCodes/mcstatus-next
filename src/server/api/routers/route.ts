@@ -10,7 +10,7 @@ import {
 
 export const routeRouter = createTRPCRouter({
   routes: publicProcedure.query(async () => {
-    const response = await fetch(
+    const response: Response = await fetch(
       env.MCROUTER_API_URL + "/routes",
       {
         method: "GET",
@@ -23,7 +23,7 @@ export const routeRouter = createTRPCRouter({
     return Object.keys(data).map((address: string) => ({ address })) as { address: string }[];
   }),
   privRoutes: protectedProcedure.query(async () => {
-    const response = await fetch(
+    const response: Response = await fetch(
       env.MCROUTER_API_URL + "/routes",
       {
         method: "GET",
@@ -36,7 +36,7 @@ export const routeRouter = createTRPCRouter({
     return Object.keys(data).map((address: string) => ({ address, backend: data[address] })) as { address: string, backend: string }[];
   }),
   insertRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
-    const response = await fetch(
+    const response: Response = await fetch(
       env.MCROUTER_API_URL + "/routes",
       {
         method: "POST",
@@ -56,7 +56,7 @@ export const routeRouter = createTRPCRouter({
     await axios.delete(
       env.MCROUTER_API_URL + "/routes/" + input.address
     )
-    const response = await fetch(
+    const response: Response = await fetch(
       env.MCROUTER_API_URL + "/routes",
       {
         method: "POST",
@@ -73,7 +73,7 @@ export const routeRouter = createTRPCRouter({
     return data as string;
   }),
   deleteRoute: protectedProcedure.input(z.string()).mutation(async ({ input }) => {
-    const response = await fetch(
+    const response: Response = await fetch(
       env.MCROUTER_API_URL + "/routes/" + input,
       {
         method: "DELETE",
