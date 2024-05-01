@@ -27,7 +27,9 @@ export const env = createEnv({
       (str) => str === "" || typeof(str) !== "string" ? [] : str.split(","),
       z.array(z.string().email()).optional(),
     ),
-    PAGE_TITLE: z.string(),
+    PAGE_TITLE: z.string().optional(),
+    PAGE_DESCRIPTION: z.string().optional(),
+    FAVICON_URL: z.string().optional(),
   },
 
   /**
@@ -52,6 +54,7 @@ export const env = createEnv({
     MCROUTER_API_URL: process.env.MCROUTER_API_URL,
     AUTHENTICATED_EMAILS: process.env.AUTHENTICATED_EMAILS,
     PAGE_TITLE: process.env.PAGE_TITLE,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    PAGE_DESCRIPTION: process.env.PAGE_DESCRIPTION,
+    FAVICON_URL: process.env.FAVICON_URL,
   },
 });
