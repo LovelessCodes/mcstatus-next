@@ -40,7 +40,7 @@ export const routeRouter = createTRPCRouter({
       {
         method: "POST",
         headers: {
-          "Accept": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           serverAddress: input.address,
@@ -48,8 +48,7 @@ export const routeRouter = createTRPCRouter({
         }),
       }
     )
-    const { data }: { data: string } = await response.json() as { data: string };
-    return data;
+    return response.ok;
   }),
   updateRoute: protectedProcedure.input(z.object({ address: z.string(), backend: z.string() })).mutation(async ({ input }) => {
     await fetch(
@@ -70,8 +69,7 @@ export const routeRouter = createTRPCRouter({
         })
       }
     )
-    const { data }: { data: string } = await response.json() as { data: string };
-    return data;
+    return response.ok;
   }),
   deleteRoute: protectedProcedure.input(z.string()).mutation(async ({ input }) => {
     const response: Response = await fetch(
@@ -80,7 +78,6 @@ export const routeRouter = createTRPCRouter({
         method: "DELETE",
       }
     )
-    const { data }: { data: string } = await response.json() as { data: string };
-    return data;
+    return response.ok;
   }),
 });

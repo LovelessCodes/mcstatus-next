@@ -142,17 +142,17 @@ function Home({ title, description, favicon }: InferGetServerSidePropsType<typeo
                             </button>
                         }
                     </div>
-                    <div className="lg:col-start-4 lg:col-span-12 lg:grid hidden col-span-1 lg:h-full h-[0px] grid-cols-1 lg:gap-10 lg:pt-4 lg:px-4 overflow-x-auto">
+                    <div className="lg:col-start-4 lg:col-span-12 lg:flex flex-col hidden col-span-1 lg:h-full h-[0px] lg:gap-6 lg:pt-4 lg:px-4 overflow-x-auto">
                         {servers.filter((s: MCStatus) => s.online)?.map((route: MCStatus, i: number) => {
                         const server = route as JavaStatusResponse;
                         return (
-                            <div key={i} className="card rounded-none bg-base-200 w-full h-1/6 flex flex-row">
+                            <div key={i} className="card rounded-none bg-base-200 w-full h-fit flex flex-row">
                                 <div className="ml-4 h-[64px] self-center">
                                     <Image className="bg-base-200" width={64} height={64} alt={server.host} src={server.icon ?? '/images/server-icon.webp'}/>
                                 </div>
-                                <div className="card-body flex flex-row gap-10">
-                                    <p dangerouslySetInnerHTML={{__html: (server && server.motd ? server.motd.html.replace("\n", "<br />") : "Unknown")}}/>
-                                    <div className="flex flex-col gap-2">
+                                <div className="card-body grid grid-cols-12 gap-10">
+                                    <p className="col-span-8" dangerouslySetInnerHTML={{__html: (server && server.motd ? server.motd.html.replace("\n", "<br />") : "Unknown")}}/>
+                                    <div className="col-span-3 flex flex-col gap-2">
                                         <p className="text-xs text-slate-400">Version: <span dangerouslySetInnerHTML={{__html: (server && server.version ? server.version.name_html : "Unknown")}}/></p>
                                         {server.players && server.players.list && server.players.list.length > 0 && <p className="text-xs text-slate-400">Players: {server.players.list.map((player: { uuid: string; name_raw: string; name_html: string; name_clean: string}, i: number) => {
                                             return <span key={i} dangerouslySetInnerHTML={{__html: player.name_html}}/>;
@@ -161,7 +161,7 @@ function Home({ title, description, favicon }: InferGetServerSidePropsType<typeo
                                             <p className="bg-neutral py-2 px-4 gap-2 flex text-slate-400 tooltip tooltip-right hover:text-slate-200 hover:cursor-pointer justify-between" data-tip="Copy" onClick={(e) => copyIP(e, server.host)}>{server.host}<svg height={24} fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M4 2h11v2H6v13H4V2zm4 4h12v16H8V6zm2 2v12h8V8h-8z" fill="currentColor"/> </svg></p>
                                         </label>
                                     </div>
-                                    <div className={`flex justify-center items-center font-black${server.players && server.players.online > 0 ? ' text-green-500': ' text-red-500'}`}>
+                                    <div className={`col-span-1 flex justify-center items-center font-black${server.players && server.players.online > 0 ? ' text-green-500': ' text-red-500'}`}>
                                         <p>{server.players && `${server.players.online}/${server.players.max}`}</p>
                                     </div>
                                 </div>
