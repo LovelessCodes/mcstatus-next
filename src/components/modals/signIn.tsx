@@ -1,9 +1,6 @@
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
 const SignIn = ({ providers }: { providers: (string | null)[] }) => {
-    const { data: sessionData } = useSession()
-
-    if (sessionData !== undefined) return null
     return (
         <>
             <input type="checkbox" id="sign-in" className="modal-toggle peer" />
