@@ -14,7 +14,6 @@ export const copyIP = async (e: React.MouseEvent<Element, MouseEvent>, ip: strin
 }
 
 const addExtras = (extras: ChatComponent[], newMotd: string) => {
-    console.log(extras);
     if (!extras) return newMotd;
     if (!extras.length) return newMotd;
     for (let i = 0; i < extras.length; i++) {

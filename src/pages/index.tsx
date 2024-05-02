@@ -149,7 +149,6 @@ function Home({ title, description, favicon, providers }: InferGetServerSideProp
                     <div className="lg:col-start-4 lg:col-span-12 lg:flex flex-col hidden col-span-1 lg:h-full h-[0px] lg:gap-6 lg:pt-4 lg:px-4 overflow-x-auto">
                         {servers.filter((s: MCStatus) => s.version)?.map((route: MCStatus, i: number) => {
                         const server = route as {host: string} & JavaPingResponse;
-                        console.log(convertMotd(server.description));
                         return (
                             <div key={i} className="card rounded-none bg-base-200 w-full h-fit flex flex-row">
                                 <div className="ml-4 h-[64px] self-center">
