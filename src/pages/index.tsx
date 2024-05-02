@@ -2,14 +2,14 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Image from 'next/image';
-import type { BedrockStatusResponse, JavaStatusResponse } from 'node-mcstatus';
+import type { JavaPingResponse, BedrockPingResponse } from "@minescope/mineping";
 import { useEffect, useReducer, useState } from 'react';
 import { AddModal, DeleteModal, SignInModal } from '~/components/modals';
 import { env } from '~/env.mjs';
 import { api } from '~/utils/api';
-import { copyIP } from '~/utils/helpers';
+import { convertMotd, copyIP } from '~/utils/helpers';
 
-type MCStatus = JavaStatusResponse | BedrockStatusResponse;
+type MCStatus = {host: string} & JavaPingResponse | {host: string} & BedrockPingResponse;
 
 export const getServerSideProps = (() => {
     return Promise.resolve({
@@ -34,8 +34,8 @@ function Home({ title, description, favicon, providers }: InferGetServerSideProp
 
     // tRPC Mutations
     const mutation = api.status.status.useMutation({
-        onSuccess(data) {
-            if (data) dispatch({ type: "ADD", payload: data });
+        onSuccess(data, variables) {
+            if (data) dispatch({ type: "ADD", payload: { host: variables.address ,...data} });
         }
     });
 
@@ -79,7 +79,7 @@ function Home({ title, description, favicon, providers }: InferGetServerSideProp
                     </div>
                     <div className="stat">
                         <div className="stat-title text-slate-200">Active Servers</div>
-                        <div className="stat-value text-slate-200">{servers?.filter((s: MCStatus) => s.online)?.length ?? 0}</div>
+                        <div className="stat-value text-slate-200">{servers?.filter((s: MCStatus) => s.version)?.length ?? 0}</div>
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@ function Home({ title, description, favicon, providers }: InferGetServerSideProp
                                                 <td>{i+1}</td>
                                                 <td>{route.address}</td>
                                                 <td>
-                                                <div className={`rounded-full h-3 w-3 ${server != undefined ? (server.online ? 'bg-green-500' : 'bg-red-700') : 'bg-base-100'}`}></div>
+                                                <div className={`rounded-full h-3 w-3 ${server != undefined ? (server.version ? 'bg-green-500' : 'bg-red-700') : 'bg-base-100'}`}></div>
                                                 </td>
                                                 {sessionData?.user &&
                                                     <td>
@@ -147,19 +147,20 @@ function Home({ title, description, favicon, providers }: InferGetServerSideProp
                         }
                     </div>
                     <div className="lg:col-start-4 lg:col-span-12 lg:flex flex-col hidden col-span-1 lg:h-full h-[0px] lg:gap-6 lg:pt-4 lg:px-4 overflow-x-auto">
-                        {servers.filter((s: MCStatus) => s.online)?.map((route: MCStatus, i: number) => {
-                        const server = route as JavaStatusResponse;
+                        {servers.filter((s: MCStatus) => s.version)?.map((route: MCStatus, i: number) => {
+                        const server = route as {host: string} & JavaPingResponse;
+                        console.log(convertMotd(server.description));
                         return (
                             <div key={i} className="card rounded-none bg-base-200 w-full h-fit flex flex-row">
                                 <div className="ml-4 h-[64px] self-center">
-                                    <Image className="bg-base-200" width={64} height={64} alt={server.host} src={server.icon ?? '/images/server-icon.webp'}/>
+                                    <Image className="bg-base-200" width={64} height={64} alt={server.host} src={server.favicon ?? '/images/server-icon.webp'}/>
                                 </div>
                                 <div className="card-body grid grid-cols-12 gap-10">
-                                    <p className="col-span-8" dangerouslySetInnerHTML={{__html: (server && server.motd ? server.motd.html.replace("\n", "<br />") : "Unknown")}}/>
+                                    <p className="col-span-8" dangerouslySetInnerHTML={{__html: (server && server.description ? convertMotd(server.description) : "Unknown")}}/>
                                     <div className="col-span-3 flex flex-col gap-2">
-                                        <p className="text-xs text-slate-400">Version: <span dangerouslySetInnerHTML={{__html: (server && server.version ? server.version.name_html : "Unknown")}}/></p>
-                                        {server.players && server.players.list && server.players.list.length > 0 && <p className="text-xs text-slate-400">Players: {server.players.list.map((player: { uuid: string; name_raw: string; name_html: string; name_clean: string}, i: number) => {
-                                            return <span key={i} dangerouslySetInnerHTML={{__html: player.name_html}}/>;
+                                        <p className="text-xs text-slate-400">Version: <span dangerouslySetInnerHTML={{__html: (server && server.version ? server.version.name : "Unknown")}}/></p>
+                                        {server.players && server.players.online && server.players.online > 0 && <p className="text-xs text-slate-400">Players: {server.players.sample?.map((player: { name: string; id: string}, i: number) => {
+                                            return <span key={i} dangerouslySetInnerHTML={{__html: player.name}}/>;
                                         })}</p>}
                                         <label className="input-group">
                                             <p className="bg-neutral py-2 px-4 gap-2 flex text-slate-400 tooltip tooltip-right hover:text-slate-200 hover:cursor-pointer justify-between" data-tip="Copy" onClick={(e) => copyIP(e, server.host)}>{server.host}<svg height={24} fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M4 2h11v2H6v13H4V2zm4 4h12v16H8V6zm2 2v12h8V8h-8z" fill="currentColor"/> </svg></p>
