@@ -54,7 +54,7 @@ function Home({
 
     // tRPC Mutations
     const mutation = api.status.status.useMutation({
-        onSuccess(data, variables) {
+        onSuccess(data) {
             if (data)
                 dispatch({
                     type: 'ADD',
@@ -98,7 +98,7 @@ function Home({
                     }),
                 )
             }
-            Promise.all(promises)
+            (async() => await Promise.all(promises))();
         }
     }, [routes])
     return (
@@ -350,7 +350,7 @@ function Home({
                     <div className="lg:col-start-4 lg:col-span-12 lg:flex flex-col hidden col-span-1 lg:h-full h-[0px] lg:gap-6 lg:pt-4 lg:px-4 overflow-x-auto">
                         {servers
                             .filter((s: MCStatus) => s.version)
-                            ?.map((route: MCStatus, i: number) => {
+                            ?.map((route: MCStatus) => {
                                 const server = route as {
                                     host: string
                                 } & JavaPingResponse
@@ -409,13 +409,10 @@ function Home({
                                                         <p className="text-xs text-slate-400">
                                                             Players:{' '}
                                                             {server.players.sample?.map(
-                                                                (
-                                                                    player: {
-                                                                        name: string
-                                                                        id: string
-                                                                    },
-                                                                    i: number,
-                                                                ) => {
+                                                                (player: {
+                                                                    name: string
+                                                                    id: string
+                                                                }) => {
                                                                     return (
                                                                         <span
                                                                             key={`player_${player.id}`}

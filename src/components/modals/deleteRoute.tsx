@@ -55,11 +55,9 @@ const DeleteRoute = ({ route }: { route: string }) => {
                                 className="bg-neutral py-2 w-9/12 px-4 flex text-slate-400 tooltip tooltip-right hover:text-slate-200 hover:cursor-pointer justify-between"
                                 data-tip="Copy IP"
                                 onClick={(e) => copyIP(e, route)}
-                                onKeyUp={(e) => {
-                                    if (e.key === 'Enter') {
-                                        copyIP(e, route)
-                                    }
-                                }}
+                                onKeyUp={(e) =>
+                                    e.key === 'Enter' && copyIP(e, route)
+                                }
                             >
                                 {route}
                                 <svg
