@@ -157,8 +157,10 @@ function Home({ title, description, favicon, providers }: InferGetServerSideProp
                                 <div className="card-body grid grid-cols-12 gap-10">
                                     <p className="col-span-8" dangerouslySetInnerHTML={{__html: (server && server.description ? convertMotd(server.description) : "Unknown")}}/>
                                     <div className="col-span-3 flex flex-col gap-2">
-                                        <p className="text-xs text-slate-400">Version: <span dangerouslySetInnerHTML={{__html: (server && server.version ? server.version.name : "Unknown")}}/></p>
-                                        {server.players && server.players.online && server.players.online > 0 && <p className="text-xs text-slate-400">Players: {server.players.sample?.map((player: { name: string; id: string}, i: number) => {
+                                        <div>
+                                            <p className="text-xs text-slate-400 tooltip" data-tip={server.version.protocol}>Version: <span dangerouslySetInnerHTML={{__html: (server && server.version ? server.version.name : "Unknown")}}/></p>
+                                        </div>
+                                        {server.players && server.players.online > 0 && <p className="text-xs text-slate-400">Players: {server.players.sample?.map((player: { name: string; id: string}, i: number) => {
                                             return <span key={i} dangerouslySetInnerHTML={{__html: player.name}}/>;
                                         })}</p>}
                                         <label className="input-group">
@@ -167,6 +169,10 @@ function Home({ title, description, favicon, providers }: InferGetServerSideProp
                                     </div>
                                     <div className={`col-span-1 flex justify-center items-center font-black${server.players && server.players.online > 0 ? ' text-green-500': ' text-red-500'}`}>
                                         <p>{server.players && `${server.players.online}/${server.players.max}`}</p>
+                                        {server.enforcesSecureChat
+                                            ? <div className="text-green-500 tooltip" data-tip="Secure"><svg height={16} fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M20 2H2v20h2V4h16v10h2V2h-2zM10 16H6v2H4v2h2v-2h4v-2zm6-4h2v4h4v2h-2v2h-2v2h-2v-4h-4v-2h2v-2h2v-2z" fill="currentColor"/> </svg></div>
+                                            : <div className="text-red-500 tooltip" data-tip="Insecure"><svg height={16} fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M4 2h18v16H6v2H4v-2h2v-2h14V4H4v18H2V2h2zm9 7h-2V7H9v2h2v2H9v2h2v-2h2v2h2v-2h-2V9zm0 0V7h2v2h-2z" fill="currentColor"/> </svg></div>
+                                        }
                                     </div>
                                 </div>
                             </div>
