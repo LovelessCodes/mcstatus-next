@@ -98,9 +98,9 @@ function Home({
                     }),
                 )
             }
-            Promise.allSettled(promises).then(() => {
-                console.log('Loaded status for all servers')
-            })
+            Promise.all(promises)
+                .then(() => console.log('Loaded status for all servers'))
+                .catch(() => console.log('Failed to load status'))
         }
     }, [routes])
     return (
