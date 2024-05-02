@@ -1,5 +1,5 @@
-import AddModal from './addRoute';
-import DeleteModal from './deleteRoute';
-import SignInModal from './signIn';
+import AddModal from './addRoute'
+import DeleteModal from './deleteRoute'
+import SignInModal from './signIn'
 
-export { AddModal, DeleteModal, SignInModal };
+export { AddModal, DeleteModal, SignInModal }
