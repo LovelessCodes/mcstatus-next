@@ -375,7 +375,7 @@ function Home({
                                         </div>
                                         <div className="card-body grid grid-cols-12 gap-10">
                                             <p
-                                                className="col-span-8"
+                                                className="col-span-7"
                                                 dangerouslySetInnerHTML={{
                                                     __html: server?.description
                                                         ? convertMotd(
@@ -384,7 +384,7 @@ function Home({
                                                         : 'Unknown',
                                                 }}
                                             />
-                                            <div className="col-span-3 flex flex-col gap-2">
+                                            <div className="col-span-4 flex flex-col gap-2">
                                                 <div>
                                                     <p
                                                         className="text-xs text-slate-400 tooltip"
@@ -454,7 +454,7 @@ function Home({
                                                 </label>
                                             </div>
                                             <div
-                                                className={`col-span-1 flex justify-center items-center font-black${
+                                                className={`col-span-1 gap-2 flex justify-center items-center font-black${
                                                     server.players &&
                                                     server.players.online > 0
                                                         ? ' text-green-500'
