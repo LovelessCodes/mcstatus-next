@@ -5,8 +5,23 @@ import {
   type DefaultSession,
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
-import EmailProvider from "next-auth/providers/email";
+import GitHubProvider from "next-auth/providers/github";
 import { env } from "~/env.mjs";
+
+const Providers = [];
+
+if (env.DISCORD_CLIENT_ID && env.DISCORD_CLIENT_SECRET) {
+  Providers.push(DiscordProvider({
+    clientId: env.DISCORD_CLIENT_ID,
+    clientSecret: env.DISCORD_CLIENT_SECRET,
+  }));
+}
+if (env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET) {
+  Providers.push(GitHubProvider({
+    clientId: env.GITHUB_CLIENT_ID,
+    clientSecret: env.GITHUB_CLIENT_SECRET,
+  }));
+}
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -55,32 +70,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),
-    EmailProvider({
-      server: {
-        host: env.SMTP_HOST,
-        port: Number(env.SMTP_PORT),
-        auth: {
-          user: env.SMTP_USER,
-          pass: env.SMTP_PASSWORD,
-        },
-      },
-      from: env.PAGE_TITLE,
-    })
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
-  ],
+  providers: Providers,
 };
 
 /**

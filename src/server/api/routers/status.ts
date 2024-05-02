@@ -10,7 +10,7 @@ export const statusRouter = createTRPCRouter({
   status: publicProcedure.input(z.object({ address: z.string(), type: z.enum(["java", "bedrock"]) })).mutation(async ({ input }) => {
     let status;
     if (input.type == "java") {
-      status = await statusJava(input.address);
+      status = await statusJava(input.address, 25565, { query: true });
     } else if (input.type == "bedrock") {
       status = await statusBedrock(input.address);
     }
@@ -21,7 +21,7 @@ export const statusRouter = createTRPCRouter({
     for (const address of input.addresses) {
       let status;
       if (input.type == "java") {
-        status = await statusJava(address);
+        status = await statusJava(address, 25565, { query: true });
       } else if (input.type == "bedrock") {
         status = await statusBedrock(address);
       }

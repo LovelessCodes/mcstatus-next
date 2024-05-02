@@ -17,12 +17,15 @@ export const getServerSideProps = (() => {
             title: env.PAGE_TITLE as string ?? "Minecraft Server",
             description: env.PAGE_DESCRIPTION as string ?? "Minecraft Server Status Dashboard",
             favicon: env.FAVICON_URL as string ?? "/favicon.ico",
-            isSmtpSet: !!env.SMTP_HOST && !!env.SMTP_PORT && !!env.SMTP_USER && !!env.SMTP_PASSWORD
+            providers: [
+                env.DISCORD_CLIENT_ID && env.DISCORD_CLIENT_SECRET ? "discord" : null,
+                env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET ? "github" : null
+            ]
         }
     });
-}) satisfies GetServerSideProps<{ title: string, description: string, favicon: string, isSmtpSet?: boolean }>;
+}) satisfies GetServerSideProps<{ title: string, description: string, favicon: string, providers: (string | null)[] }>;
 
-function Home({ title, description, favicon, isSmtpSet }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Home({ title, description, favicon, providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     // Next Auth
     const { data: sessionData } = useSession();
     
@@ -175,7 +178,7 @@ function Home({ title, description, favicon, isSmtpSet }: InferGetServerSideProp
                 {sessionData?.user ? <>
                     <DeleteModal route={deleteRoute} />
                     <AddModal />
-                </> : <SignInModal isSmtpSet={isSmtpSet} />}
+                </> : <SignInModal providers={providers} />}
             </main>
         </>
     )

@@ -20,8 +20,10 @@ export const env = createEnv({
       process.env.VERCEL ? z.string().min(1) : z.string().url(),
     ),
     // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
-    DISCORD_CLIENT_ID: z.string(),
-    DISCORD_CLIENT_SECRET: z.string(),
+    DISCORD_CLIENT_ID: z.string().optional(),
+    DISCORD_CLIENT_SECRET: z.string().optional(),
+    GITHUB_CLIENT_ID: z.string().optional(),
+    GITHUB_CLIENT_SECRET: z.string().optional(),
     MCROUTER_API_URL: z.string().url(),
     AUTHENTICATED_EMAILS: z.preprocess(
       (str) => str === "" || typeof(str) !== "string" ? [] : str.split(","),
@@ -30,10 +32,6 @@ export const env = createEnv({
     PAGE_TITLE: z.string().optional(),
     PAGE_DESCRIPTION: z.string().optional(),
     FAVICON_URL: z.string().optional(),
-    SMTP_HOST: z.string().optional(),
-    SMTP_PORT: z.string().optional(),
-    SMTP_USER: z.string().optional(),
-    SMTP_PASSWORD: z.string().optional(),
   },
 
   /**
@@ -55,14 +53,12 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
     MCROUTER_API_URL: process.env.MCROUTER_API_URL,
     AUTHENTICATED_EMAILS: process.env.AUTHENTICATED_EMAILS,
     PAGE_TITLE: process.env.PAGE_TITLE,
     PAGE_DESCRIPTION: process.env.PAGE_DESCRIPTION,
     FAVICON_URL: process.env.FAVICON_URL,
-    SMTP_HOST: process.env.SMTP_HOST,
-    SMTP_PORT: process.env.SMTP_PORT,
-    SMTP_USER: process.env.SMTP_USER,
-    SMTP_PASSWORD: process.env.SMTP_PASSWORD,
   },
 });
