@@ -14,7 +14,7 @@ const AddRoute = () => {
 
     const { mutate: addNewRoute, isLoading: isInserting } = api.route.insertRoute.useMutation({
         onSuccess: async () => {
-            document.getElementById("Add-route")?.click();
+            document.getElementById("add-route")?.click();
             setAddress("");
             setBackend("");
             await utils.route.routes.invalidate();
@@ -59,9 +59,9 @@ const AddRoute = () => {
                         <p className={`mt-2 ${!back.safeParse(backend).success && backend.length > 0 ? "visible" : "invisible"} text-pink-600 text-sm`}>
                             Please provide a valid backend.
                         </p>
-                        <div className="form-control mt-6">
+                        <div className="w-full btn-group">
                             {isInserting ?
-                                <button className="btn btn-primary rounded-none btn-disabled">Creating...</button> :
+                                <button className="btn btn-primary rounded-none btn-disabled">Adding...</button> :
                                 <button
                                     disabled={!url.safeParse(address).success || !back.safeParse(backend).success || address.length === 0 || backend.length === 0}
                                     className="btn btn-primary rounded-none"

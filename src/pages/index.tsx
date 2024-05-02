@@ -17,11 +17,12 @@ export const getServerSideProps = (() => {
             title: env.PAGE_TITLE as string ?? "Minecraft Server",
             description: env.PAGE_DESCRIPTION as string ?? "Minecraft Server Status Dashboard",
             favicon: env.FAVICON_URL as string ?? "/favicon.ico",
+            isSmtpSet: !!env.SMTP_HOST && !!env.SMTP_PORT && !!env.SMTP_USER && !!env.SMTP_PASSWORD
         }
     });
-}) satisfies GetServerSideProps<{ title: string, description: string, favicon: string }>;
+}) satisfies GetServerSideProps<{ title: string, description: string, favicon: string, isSmtpSet?: boolean }>;
 
-function Home({ title, description, favicon }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Home({ title, description, favicon, isSmtpSet }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     // Next Auth
     const { data: sessionData } = useSession();
     
@@ -174,7 +175,7 @@ function Home({ title, description, favicon }: InferGetServerSidePropsType<typeo
                 {sessionData?.user ? <>
                     <DeleteModal route={deleteRoute} />
                     <AddModal />
-                </> : <SignInModal />}
+                </> : <SignInModal isSmtpSet={isSmtpSet} />}
             </main>
         </>
     )

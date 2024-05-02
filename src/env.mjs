@@ -30,6 +30,10 @@ export const env = createEnv({
     PAGE_TITLE: z.string().optional(),
     PAGE_DESCRIPTION: z.string().optional(),
     FAVICON_URL: z.string().optional(),
+    SMTP_HOST: z.string().optional(),
+    SMTP_PORT: z.string().optional(),
+    SMTP_USER: z.string().optional(),
+    SMTP_PASSWORD: z.string().optional(),
   },
 
   /**
@@ -56,5 +60,9 @@ export const env = createEnv({
     PAGE_TITLE: process.env.PAGE_TITLE,
     PAGE_DESCRIPTION: process.env.PAGE_DESCRIPTION,
     FAVICON_URL: process.env.FAVICON_URL,
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASSWORD: process.env.SMTP_PASSWORD,
   },
 });

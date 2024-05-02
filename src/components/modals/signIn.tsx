@@ -2,7 +2,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { z } from 'zod';
 
-const SignIn = () => {
+const SignIn = ({ isSmtpSet }: { isSmtpSet: boolean }) => {
     const { data: sessionData } = useSession();
     const email = z.string().email();
     const [ emailState, setEmailState ] = useState<string>("");
@@ -30,19 +30,23 @@ const SignIn = () => {
                                 </div>
                             </button>
                         </div>
-                        <div>
-                            <p>or use your email:</p>
-                            <input onChange={(e) => setEmailState(e.target.value)} value={emailState} className="peer w-full p-2 border border-primary opacity-50 focus:opacity-100 rounded-none" type="text" placeholder="test@test.com"/>
-                            <p className={`mt-2 ${!email.safeParse(emailState).success && emailState.length > 0 ? "visible" : "invisible"} text-pink-600 text-sm`}>
-                                Please provide a valid email address.
-                            </p>
-                        </div>
-                        <div className="btn-group w-full">
-                            <button className="btn btn-primary rounded-none w-1/2" disabled={!email.safeParse(emailState).success} onClick={async () => {
-                                if (email.safeParse(emailState).success) await signMeIn();
-                            }}>Sign in</button>
-                            <label className="btn btn-ghost rounded-none w-1/2" htmlFor="sign-in">Cancel</label>
-                        </div>
+                        {
+                            isSmtpSet && <>
+                                <div>
+                                    <p>or use your email:</p>
+                                    <input onChange={(e) => setEmailState(e.target.value)} value={emailState} className="peer w-full p-2 border border-primary opacity-50 focus:opacity-100 rounded-none" type="text" placeholder="test@test.com"/>
+                                    <p className={`mt-2 ${!email.safeParse(emailState).success && emailState.length > 0 ? "visible" : "invisible"} text-pink-600 text-sm`}>
+                                        Please provide a valid email address.
+                                    </p>
+                                </div>
+                                <div className="btn-group w-full">
+                                    <button className="btn btn-primary rounded-none w-1/2" disabled={!email.safeParse(emailState).success} onClick={async () => {
+                                        if (email.safeParse(emailState).success) await signMeIn();
+                                    }}>Sign in</button>
+                                    <label className="btn btn-ghost rounded-none w-1/2" htmlFor="sign-in">Cancel</label>
+                                </div>
+                            </>
+                        }
                     </div>
                 </label>
             </label>
