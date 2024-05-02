@@ -1,6 +1,4 @@
 import { signIn, useSession } from 'next-auth/react';
-import { useState } from 'react';
-import { z } from 'zod';
 
 const SignIn = ({ providers }: { providers: (string | null)[] }) => {
     const { data: sessionData } = useSession();
