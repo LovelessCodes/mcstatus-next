@@ -98,7 +98,9 @@ function Home({
                     }),
                 )
             }
-            (async() => await Promise.all(promises))();
+            Promise.allSettled(promises).then(() => {
+                console.log('Loaded status for all servers')
+            })
         }
     }, [routes])
     return (
