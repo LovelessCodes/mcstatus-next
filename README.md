@@ -1,8 +1,12 @@
 # MCStatus-Next
-MCStatus-Next is a project built with Next.js, tRPC, NextAuth, and integration with the MCRouter API through environment variables. It provides a powerful and user-friendly dashboard to monitor the status of Minecraft servers served through MCRouter.
+![TypeScript Badge](https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![NextJS Badge](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![Tailwind Badge](https://img.shields.io/badge/tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![DaisyUI Badge](https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white)   
+MCStatus-Next is a project built with Next.js, tRPC, NextAuth, and integration with the MCRouter API through environment variables. It provides a powerful and user-friendly dashboard to monitor the status of Minecraft servers served through MCRouter.    
 
 ## Demo
-Demo is available on Vercel over at https://mcstatus-next.vercel.app/
+[![Demo Badge](https://img.shields.io/badge/demo_hosted_on-vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://mcstatus-next.vercel.app/)
 
 ## Features
 🔍 **Server Status Monitoring**: MCStatus-Next allows you to monitor the status of your Minecraft servers in real-time. It provides information on the server's uptime, player count, and other important metrics.
