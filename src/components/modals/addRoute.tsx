@@ -25,7 +25,7 @@ const AddRoute = () => {
                 await utils.route.routes.invalidate()
             },
         })
-    if (sessionData === undefined) return <div>Loading...</div>
+    if (sessionData === undefined) return null
     return (
         <>
             <input

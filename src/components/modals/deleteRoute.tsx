@@ -14,7 +14,7 @@ const DeleteRoute = ({ route }: { route: string }) => {
             },
         })
 
-    if (sessionData === undefined) return <div>Loading...</div>
+    if (sessionData === undefined) return null
     return (
         <>
             <input
