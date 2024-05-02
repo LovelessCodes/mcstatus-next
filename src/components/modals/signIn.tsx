@@ -31,7 +31,7 @@ const SignIn = ({ providers }: { providers: (string | null)[] }) => {
                         <p className="text-lg">
                             Start by using any of our sign in flows:
                         </p>
-                        <div className="flex flex-col p-4">
+                        <div className="flex flex-col p-4 gap-4">
                             {providers?.map((provider) => {
                                 if (provider === 'discord') {
                                     return (
@@ -80,7 +80,7 @@ const SignIn = ({ providers }: { providers: (string | null)[] }) => {
                                             key="github"
                                             type="button"
                                             onClick={() => signIn('github')}
-                                            className="w-full flex flex-row justify-between items-center group/github border border-[#7289da] text-[#7289da] hover:text-base-200 hover:bg-[#7289da] p-2 transition-colors"
+                                            className="w-full flex flex-row justify-between items-center group/github border border-[#4078c0] text-[#4078c0] hover:text-base-200 hover:bg-[#7289da] p-2 transition-colors"
                                         >
                                             <p className="font-bold text-lg">
                                                 GitHub
