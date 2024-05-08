@@ -26,6 +26,7 @@ MCStatus-Next is a project built with Next.js, tRPC, NextAuth, and integration w
 - [ ] Edit/Update server(s)
 - [ ] Set a default server
 - [ ] More authentication options
+- [ ] Better Docker memory optimization
 
 ## Setup
 To set up MCStatus-Next, follow the steps below:
