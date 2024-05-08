@@ -3,7 +3,7 @@
 ![NextJS Badge](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
 ![Tailwind Badge](https://img.shields.io/badge/tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![DaisyUI Badge](https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white)   
-MCStatus-Next is a project built with Next.js, tRPC, NextAuth, and integration with the MCRouter API through environment variables. It provides a powerful and user-friendly dashboard to monitor the status of Minecraft servers served through MCRouter.    
+MCStatus-Next is a project built with Next.js, tRPC, NextAuth, and integration with the [MC-Router](https://github.com/itzg/mc-router/) API through environment variables. It provides a powerful and user-friendly dashboard to monitor the status of Minecraft servers served through [MC-Router](https://github.com/itzg/mc-router/).    
 
 ## Demo
 [![Demo Badge](https://img.shields.io/badge/demo_hosted_on-vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://mcstatus-next.vercel.app/)
@@ -13,13 +13,13 @@ MCStatus-Next is a project built with Next.js, tRPC, NextAuth, and integration w
 
 🔒 **Third-party Authentication**: The project integrates with Discord and Github authentication through Next Auth, allowing users to sign in securely using their Discord or Github accounts. This ensures a seamless and convenient login experience for server administrators.
 
-🔌 **MCRouter API Integration**: MCStatus-Next connects with the MCRouter API, enabling it to retrieve essential information about the Minecraft servers. It utilizes environment variables to configure the API URL, ensuring flexibility and ease of use.
+🔌 **[MC-Router](https://github.com/itzg/mc-router/) API Integration**: MCStatus-Next connects with the [MC-Router](https://github.com/itzg/mc-router/) API, enabling it to retrieve essential information about the Minecraft servers. It utilizes environment variables to configure the API URL, ensuring flexibility and ease of use.
 
 🖥️ **User-Friendly Dashboard**: The dashboard interface is designed to be intuitive and user-friendly. It provides an organized view of server status, player activity, and other relevant data, making it easy to manage multiple Minecraft servers effectively.
 
 ### Development
 - [x] User authentication
-- [x] MC-Router API implementation
+- [x] [MC-Router](https://github.com/itzg/mc-router/) API implementation
 - [x] Server Status fetching
 - [x] Add new server(s)
 - [x] Delete server(s)
@@ -68,6 +68,29 @@ Environment Variables
 | PAGE_DESCRIPTION | `undefined` |
 | FAVICON_URL | `undefined` |
 
+#### Running alongside [MC-Router](https://github.com/itzg/mc-router/)
+```yml
+services:
+  mcstatus-next:
+    container_name: mcstatus-next
+    image: ghcr.io/lovelesscodes/mcstatus-next:latest
+    restart: always
+    depends_on:
+      - mc-router
+    ports:
+      - 6969:6969
+    environment:
+      MCROUTER_API_URL: "http://mc-router:80"
+  
+  mc-router:
+    container_name: mc-router
+    image: itzg/mc-router
+    ports:
+      - 25565:25565
+    environment:
+      API_BINDING: ":80"
+```
+
 ## Contributing
 Contributions to MCStatus-Next are welcome! If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the project's GitHub repository.
 
@@ -75,4 +98,4 @@ Contributions to MCStatus-Next are welcome! If you encounter any issues or have 
 MCStatus-Next is licensed under the [MIT License](LICENSE.md). You are free to modify and distribute this project in accordance with the terms of the license.
 
 ## Acknowledgments
-MCStatus-Next was inspired by the need for a comprehensive and user-friendly solution to monitor Minecraft server status. Special thanks to the creators and contributors of [Next.js](https://github.com/vercel/next.js), [tRPC](https://github.com/trpc/trpc), [NextAuth](https://github.com/nextauthjs/next-auth), and [MCRouter](https://github.com/itzg/mc-router) for their amazing work.
+MCStatus-Next was inspired by the need for a comprehensive and user-friendly solution to monitor Minecraft server status. Special thanks to the creators and contributors of [Next.js](https://github.com/vercel/next.js), [tRPC](https://github.com/trpc/trpc), [NextAuth](https://github.com/nextauthjs/next-auth), and [MC-Router](https://github.com/itzg/mc-router) for their amazing work.
