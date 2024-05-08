@@ -42,7 +42,6 @@ yarn-error.log*
 *.tsbuildinfo
 
 # locks
-bun.lockb
 package-lock.json
 
 # vs code
