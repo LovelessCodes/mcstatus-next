@@ -33,9 +33,9 @@ export const statusRouter = createTRPCRouter({
             for (const address of input.addresses) {
                 let status
                 if (input.type == 'java') {
-                    status = await pingJava(address)
+                    status = await pingJava(address, {timeout: 250})
                 } else if (input.type == 'bedrock') {
-                    status = await pingBedrock(address)
+                    status = await pingBedrock(address, {timeout: 250})
                 }
                 statuses.push(status)
             }

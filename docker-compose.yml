@@ -1,0 +1,7 @@
+services:
+  mcstatus-next:
+    container_name: mcstatus-next
+    image: ghcr.io/lovelesscodes/mcstatus-next
+    restart: always
+    ports:
+      - 6969:6969

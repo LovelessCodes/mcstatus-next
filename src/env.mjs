@@ -48,15 +48,15 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    NODE_ENV: process.env.NODE_ENV,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NODE_ENV: process.env.NODE_ENV ?? "development",
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET ?? "qKGytrvp6QgmtTKIyuKPaMtxPffu7IB5Bo7p6Dkq/e0=",
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? "http://localhost:6969",
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-    MCROUTER_API_URL: process.env.MCROUTER_API_URL,
-    AUTHENTICATED_EMAILS: process.env.AUTHENTICATED_EMAILS,
+    MCROUTER_API_URL: process.env.MCROUTER_API_URL ?? "https://router.less.cx",
+    AUTHENTICATED_EMAILS: process.env.AUTHENTICATED_EMAILS ?? "",
     PAGE_TITLE: process.env.PAGE_TITLE,
     PAGE_DESCRIPTION: process.env.PAGE_DESCRIPTION,
     FAVICON_URL: process.env.FAVICON_URL,
