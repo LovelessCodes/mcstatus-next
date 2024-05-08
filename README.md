@@ -41,6 +41,7 @@ MCStatus-Next will now be accessible in your web browser at the specified URL.
 
 ### Docker
 `docker run -d -p 6969:6969 ghcr.io/lovelesscodes/mcstatus-next:latest`
+
 Using `docker-compose`
 ```yml
 services:
