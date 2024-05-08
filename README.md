@@ -30,6 +30,7 @@ MCStatus-Next is a project built with Next.js, tRPC, NextAuth, and integration w
 ## Setup
 To set up MCStatus-Next, follow the steps below:
 
+### Local
 1. Clone the repository to your local machine.
 2. Create a `.env.local` file based on the provided `.env.example` file.
 3. Fill in the necessary configuration values in the `.env.local` file, including the Discord client ID and secret, MCRouter API URL, and any other required variables.
@@ -37,6 +38,34 @@ To set up MCStatus-Next, follow the steps below:
 5. Start the development server with `npm run dev` or `yarn dev`.
 
 MCStatus-Next will now be accessible in your web browser at the specified URL.
+
+### Docker
+`docker run -d -p 6969:6969 ghcr.io/lovelesscodes/mcstatus-next:latest`
+Using `docker-compose`
+```yml
+services:
+  mcstatus-next:
+    container_name: mcstatus-next
+    image: ghcr.io/lovelesscodes/mcstatus-next:latest
+    restart: always
+    ports:
+      - 6969:6969
+```
+No environment variables are required to run the service, but the defaults will be used.   
+Environment Variables
+| Variable  | Default | 
+| ------------- | ------------- |
+| NEXTAUTH_SECRET  | `secret` |
+| NEXTAUTH_URL     | `http://localhost:6969`  |
+| DISCORD_CLIENT_ID | `undefined` |
+| DISCORD_CLIENT_SECRET | `undefined` |
+| GITHUB_CLIENT_ID | `undefined` |
+| GITHUB_CLIENT_SECRET | `undefined` |
+| MCROUTER_API_URL | `https://router.less.cx` |
+| AUTHENTICATED_EMAILS | `undefined` |
+| PAGE_TITLE | `undefined` |
+| PAGE_DESCRIPTION | `undefined` |
+| FAVICON_URL | `undefined` |
 
 ## Contributing
 Contributions to MCStatus-Next are welcome! If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the project's GitHub repository.
